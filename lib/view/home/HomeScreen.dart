@@ -61,69 +61,21 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: sofUserList?.length,
         itemBuilder: (context, position) {
           // return _getSOFUserListItem(sofUserList![position]);
-          return _getSOFUserListItem2(sofUserList![position]);
+          return _getSOFUserListItem(sofUserList![position]);
         });
-  }
 
+  }
   Widget _getSOFUserListItem(SOFUser item) {
     return Card(
-      child: ListTile(
-        leading: ClipRRect(
-          child: Image.network(
-            item.userAvatar ?? "",
-            errorBuilder: (context, error, stackTrace) {
-              return new Image.asset('assets/images/img_error.png');
-            },
-            fit: BoxFit.fill,
-            width: context.resources.dimension.listImageSize,
-            height: context.resources.dimension.listImageSize,
-          ),
-          borderRadius: BorderRadius.circular(
-              context.resources.dimension.imageBorderRadius),
-        ),
-        title: MyTextView(
-            item.userName ?? "NA",
-            context.resources.color.colorPrimaryText,
-            context.resources.dimension.bigText),
-        subtitle: MyTextView(
-            item.userAge ?? "NA",
-            context.resources.color.colorSecondaryText,
-            context.resources.dimension.mediumText),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            MyTextView(
-                item.location ?? "NA",
-                context.resources.color.colorBlack,
-                context.resources.dimension.mediumText),
-            SizedBox(
-              width: context.resources.dimension.verySmallMargin,
-            ),
-            Icon(
-              Icons.bookmark,
-              color: context.resources.color.colorAccent,
-            ),
-          ],
-        ),
-        onTap: () {
-          // _sendDataToMovieDetailScreen(context, item);
-        },
-      ),
-      elevation: context.resources.dimension.lightElevation,
-    );
-  }
-
-  Widget _getSOFUserListItem2(SOFUser item) {
-    return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(context.resources.dimension.smallMargin),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(context.resources.dimension.bigMargin),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -136,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: context.resources.dimension.listImageSize,
                   height: context.resources.dimension.listImageSize,
                 ),
-                Container(width: 16),
+                Container(width: context.resources.dimension.defaultMargin),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
