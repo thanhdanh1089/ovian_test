@@ -10,6 +10,7 @@ class SOFUsersListVM extends ChangeNotifier {
   int page = 1;
   int pageSize = 30;
   int nextPage = 2;
+  bool isBookmarkFilter = false;
 
   ApiResponse<SOFUsersMain> sofUserMain = ApiResponse.loading();
 
@@ -20,10 +21,25 @@ class SOFUsersListVM extends ChangeNotifier {
     nextPage = 2;
   }
 
+  void loadFilterData() {
+    isBookmarkFilter = !isBookmarkFilter;
+    if (isBookmarkFilter) {
+      users = bookmarkUsers;
+      notifyListeners();
+    } else {
+      resetPage();
+      fetchSOFUsers();
+    }
+  }
+
   void initSOFData() {
     resetPage();
-    fetchBookmarkSOFUsers();
+    fetchBookmarkSOFUsers().then((value) {
+      fetchSOFUsers();
+    });
+    
   }
+  
 
   void incrementPage() {
     if (sofUserMain.data?.hasMore == false) return;
@@ -42,6 +58,15 @@ class SOFUsersListVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  void loadingDeleteData(SOFUser sofUser) {
+    for (int i = 0; i < users!.length; i++) {
+      if (users![i].userId == sofUser.userId) {
+        users![i].isBookmark = false;
+      }
+    }
+    notifyListeners();
+  }
+
   void _setSOFUsersMain(ApiResponse<SOFUsersMain> response) {
     List<SOFUser>? item = response.data?.sofUsers;
     if (item != null) {
@@ -53,22 +78,25 @@ class SOFUsersListVM extends ChangeNotifier {
 
   void _setBookmarkSOFUsersMain(List<SOFUser> response) {
     List<SOFUser>? items = response;
+    items.forEach((element) { 
+      element.isBookmark = true;});
     bookmarkUsers!.addAll(items);
-    fetchSOFUsers();
   }
 
   void _insertBookmarkSOFUsers(int? response) {
+    fetchBookmarkSOFUsers();
     notifyListeners();
   }
 
-  void _deleteBookmarkSOFUsers() {
-    loadingData();
+  void _deleteBookmarkSOFUsers(SOFUser sofUser) {
+    loadingDeleteData(sofUser);
+    fetchBookmarkSOFUsers();
     notifyListeners();
   }
 
   SOFUser _setBookmarkSOFUsers(SOFUser sofUser) {
     SOFUser item = sofUser;
-    item.isBookmark = !item.isBookmark;
+    item.isBookmark = true;
     return item;
   }
 
@@ -99,7 +127,7 @@ class SOFUsersListVM extends ChangeNotifier {
   Future<void> deleteBookmarkSOFUsers(SOFUser sofUser) async {
     _myRepo
         .deleteBookmarkUser(sofUser)
-        .then((value) => _deleteBookmarkSOFUsers())
-        .onError((error, stackTrace) => _deleteBookmarkSOFUsers());
+        .then((value) => _deleteBookmarkSOFUsers(sofUser))
+        .onError((error, stackTrace) => _deleteBookmarkSOFUsers(sofUser));
   }
 }

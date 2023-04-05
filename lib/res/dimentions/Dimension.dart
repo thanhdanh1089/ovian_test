@@ -20,4 +20,10 @@ abstract class Dimensions{
   //extra
   double get listImageSize;
   double get imageHeight;
+  double get smallSizebox;
+  //font size
+  double get textFontSize;
+
+  double get iconImage;
+  double get smallIconImage;
 }

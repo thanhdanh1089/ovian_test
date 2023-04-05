@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ovian_test/data/remote/response/Status.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
-import 'package:ovian_test/utils/Utils.dart';
 import 'package:ovian_test/view/detail/SOFUserDetailScreen.dart';
 import 'package:ovian_test/view/widget/MyTextView.dart';
 import 'package:ovian_test/view_model/home/SOFUsersListVM.dart';
@@ -36,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.resources.strings.homeScreen,
                 context.resources.color.colorWhite,
                 context.resources.dimension.bigText)),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: context.resources.color.statusGrey,
       ),
       body: ChangeNotifierProvider<SOFUsersListVM>.value(
         value: viewModel,
@@ -58,169 +57,117 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _getSOFUserListView(List<SOFUser>? sofUserList) {
     return ListView.builder(
+        padding: EdgeInsets.only(
+            right: context.resources.dimension.smallMargin,
+            left: context.resources.dimension.smallMargin),
         itemCount: sofUserList?.length,
         itemBuilder: (context, position) {
-          // return _getSOFUserListItem(sofUserList![position]);
           if (position == sofUserList!.length - 1) {
             viewModel.incrementPage();
             viewModel.fetchSOFUsers();
+            return Container(
+              margin: const EdgeInsets.all(20.0),
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
+              ),
+            );
+            
           }
           return _getSOFUserListItem(sofUserList[position]);
         });
-  }
-
-  Widget _getSOFUserListItem2(SOFUser item) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(context.resources.dimension.smallMargin),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: InkWell(
-        onTap: () {
-          _sendDataToSOFUserDetailScreen(context, item);
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(context.resources.dimension.bigMargin),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Image.network(
-                    item.userAvatar ?? "",
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset('assets/images/img_error.png');
-                    },
-                    fit: BoxFit.fill,
-                    width: context.resources.dimension.listImageSize,
-                    height: context.resources.dimension.listImageSize,
-                  ),
-                  Container(width: context.resources.dimension.defaultMargin),
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              item.userName ?? "",
-                              style: TextStyle(
-                                  color: context.resources.color.colorGrey,
-                                  fontSize:
-                                      context.resources.dimension.mediumText),
-                            ),
-                            Text(
-                              '${item.userAge ?? "0"}',
-                              style: TextStyle(
-                                  color: context.resources.color.colorBlack,
-                                  fontSize:
-                                      context.resources.dimension.smallText),
-                            ),
-                            Text(
-                              item.location ?? "Unknown",
-                              maxLines: 2,
-                              style: TextStyle(
-                                  color: context.resources.color.colorGrey,
-                                  fontSize:
-                                      context.resources.dimension.mediumText),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          iconSize: 16,
-                          icon: const Icon(Icons.bookmark),
-                          color: (item.isBookmark
-                              ? context.resources.color.colorAccent
-                              : context.resources.color.colorGrey),
-                          onPressed: () {
-                            !item.isBookmark
-                                ? viewModel.insertBookmarkSOFUsers(item)
-                                : viewModel.deleteBookmarkSOFUsers(item);
-                            // ...
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _getSOFUserListItem(SOFUser item) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Image.network(
-                  item.userAvatar ?? "",
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset('assets/images/img_error.png');
-                  },
-                  fit: BoxFit.fill,
-                  width: context.resources.dimension.listImageSize,
-                  height: context.resources.dimension.listImageSize,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.userName.toString(),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        item.userAge.toString() + " " + r"years",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          iconSize: 16,
-                          icon: const Icon(Icons.bookmark),
-                          color: (item.isBookmark
-                              ? context.resources.color.colorAccent
-                              : context.resources.color.colorGrey),
-                          onPressed: () {
-                            !item.isBookmark
-                                ? viewModel.insertBookmarkSOFUsers(item)
-                                : viewModel.deleteBookmarkSOFUsers(item);
-                            // ...
-                          },
-                        ),
-                      )
-                    ],
+        child: InkWell(
+          onTap: () {
+            _sendDataToSOFUserDetailScreen(context, item);
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          context.resources.dimension.listImageSize / 2),
+                      child: Image.network(
+                        item.userAvatar ?? "",
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset('assets/images/img_error.png');
+                        },
+                        fit: BoxFit.fill,
+                        width: context.resources.dimension.listImageSize,
+                        height: context.resources.dimension.listImageSize,
+                      )),
+                  SizedBox(
+                    width: context.resources.dimension.smallSizebox,
                   ),
-                )
-              ],
-            )
-          ],
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.userName.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          item.userAge.toString() + " " + r"years",
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          item.location.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        context.resources.dimension.listImageSize / 2),
+                    child: IconButton(
+                      iconSize: 16,
+                      icon: const Icon(Icons.bookmark),
+                      color: (item.isBookmark!
+                          ? context.resources.color.colorAccent
+                          : context.resources.color.colorGrey),
+                      onPressed: () {
+                        !item.isBookmark!
+                            ? viewModel.insertBookmarkSOFUsers(item)
+                            : viewModel.deleteBookmarkSOFUsers(item);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: context.resources.dimension.smallSizebox,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -41,11 +41,21 @@ class AppDimension extends Dimensions {
   double get verySmallText => 8;
 
   @override
-  double get listImageSize => 100;
+  double get listImageSize => 50;
 
   @override
   double get imageBorderRadius => 8;
 
   @override
   double get imageHeight => 450;
+
+  @override
+  double get smallSizebox => 5;
+
+  @override
+  double get textFontSize => 16;
+
+  @override
+  double get iconImage => 40;
+  double get smallIconImage => 24;
 }

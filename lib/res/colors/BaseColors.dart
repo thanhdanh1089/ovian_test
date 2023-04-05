@@ -14,4 +14,5 @@ abstract class BaseColors{
   Color get colorWhite;
   Color get colorBlack;
   Color get colorGrey;
+  Color get statusGrey;
 }

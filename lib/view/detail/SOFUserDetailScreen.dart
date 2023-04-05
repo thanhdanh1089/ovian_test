@@ -44,7 +44,7 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
                 context.resources.strings.sofUserDetailScreen,
                 context.resources.color.colorWhite,
                 context.resources.dimension.bigText)),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: context.resources.color.statusGrey,
       ),
       body: ChangeNotifierProvider<SOFUserDetailVM>.value(
         value: viewModel,
@@ -67,11 +67,20 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
   Widget _getSOFUserDetailView(List<SOFPost>? sofUserPostList) {
     return ListView.builder(
         itemCount: sofUserPostList?.length,
+        padding: EdgeInsets.only(
+            right: context.resources.dimension.smallMargin,
+            left: context.resources.dimension.smallMargin),
         itemBuilder: (context, position) {
-          // return _getSOFUserListItem(sofUserList![position]);
           if (position == sofUserPostList!.length - 1) {
             viewModel.incrementPage();
             viewModel.fetchSOFUserDetail();
+            return Container(
+              margin: const EdgeInsets.all(20.0),
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
+              ),
+            );
           }
           return _getSOFUserDetailItem(sofUserPostList[position]);
         });
@@ -79,65 +88,69 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
 
   Widget _getSOFUserDetailItem(SOFPost item) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(context.resources.dimension.smallMargin),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(context.resources.dimension.bigMargin),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(width: context.resources.dimension.defaultMargin),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            item.reputationType ?? "",
-                            style: TextStyle(
-                                color: context.resources.color.colorGrey,
-                                fontSize:
-                                    context.resources.dimension.mediumText),
-                          ),
-                          Text(
-                            '${item.postId ?? "0"}',
-                            style: TextStyle(
-                                color: context.resources.color.colorBlack,
-                                fontSize:
-                                    context.resources.dimension.smallText),
-                          ),
-                          Text(
-                            '${item.creationDate ?? "0"}',
-                            maxLines: 2,
-                            style: TextStyle(
-                                color: context.resources.color.colorGrey,
-                                fontSize:
-                                    context.resources.dimension.mediumText),
-                          ),
-                          Text(
-                            '${item.reputationChange ?? "0"}',
-                            maxLines: 2,
-                            style: TextStyle(
-                                color: context.resources.color.colorGrey,
-                                fontSize:
-                                    context.resources.dimension.mediumText),
-                          ),
-                        ],
-                      ),
-                    ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: () {},
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Post id:" +item.postId.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          "Reputation type:" + item.reputationType.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          "Reputation change:" +item.reputationChange.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          "Create date:" + item.creationDate.toString(),
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

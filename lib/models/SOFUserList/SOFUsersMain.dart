@@ -38,7 +38,7 @@ class SOFUser {
     this.reputation,
     this.location,
     this.userAge,
-    this.isBookmark = false,
+    this.isBookmark,
   });
 
   int? userId;
@@ -47,7 +47,7 @@ class SOFUser {
   int? reputation;
   String? location;
   int? userAge;
-  bool isBookmark;
+  bool? isBookmark;
 
   factory SOFUser.fromJson(Map<String, dynamic> json) => SOFUser(
         userId: json["user_id"] == null ? null : json["user_id"],
@@ -57,6 +57,7 @@ class SOFUser {
         reputation: json["reputation"] == null ? null : json["reputation"],
         location: json["location"] == null ? null : json["location"],
         userAge: json["age"] == null ? 0 : json["age"],
+        isBookmark: false,
       );
 
   Map<String, dynamic> toJson() => {

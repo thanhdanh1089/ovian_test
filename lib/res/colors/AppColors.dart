@@ -43,5 +43,8 @@ class AppColors implements BaseColors{
   Color get catChipColor => Colors.indigoAccent;
 
   @override
-  Color get colorGrey => Color.fromARGB(255, 20, 23, 28);
+  Color get colorGrey => Color.fromARGB(255, 100, 104, 112);
+
+  @override
+  Color get statusGrey => Color.fromARGB(255, 26, 27, 29);
 }
