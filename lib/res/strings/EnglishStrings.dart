@@ -1,16 +1,15 @@
 import 'package:ovian_test/res/strings/Strings.dart';
 
-class EnglishStrings extends Strings{
+class EnglishStrings extends Strings {
   @override
-  String get homeScreen => "Users Stackoverflow";
+  String get homeScreen => "List User";
 
   @override
-  String get movieDetailScreen => "Users Details";
+  String get sofUserDetailScreen => "Users Details";
 
   @override
   String get titleCast => "Cast";
 
   @override
   String get titleCategories => "Categories";
-
 }

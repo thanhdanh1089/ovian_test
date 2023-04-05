@@ -1,6 +1,6 @@
 import 'package:ovian_test/res/dimentions/Dimension.dart';
 
-class AppDimension extends Dimensions{
+class AppDimension extends Dimensions {
   @override
   double get bigMargin => 20;
 
@@ -41,12 +41,11 @@ class AppDimension extends Dimensions{
   double get verySmallText => 8;
 
   @override
-  double get listImageSize => 50;
+  double get listImageSize => 100;
 
   @override
   double get imageBorderRadius => 8;
 
   @override
   double get imageHeight => 450;
-  
 }

@@ -3,7 +3,7 @@ import 'package:ovian_test/data/remote/response/Status.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
 import 'package:ovian_test/utils/Utils.dart';
-// import 'package:ovian_test/view/details/MovieDetailsScreen.dart';
+import 'package:ovian_test/view/detail/SOFUserDetailScreen.dart';
 import 'package:ovian_test/view/widget/MyTextView.dart';
 import 'package:ovian_test/view_model/home/SOFUsersListVM.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    viewModel.fetchSOFUsers();
+    viewModel.initSOFData();
     super.initState();
   }
 
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case Status.ERROR:
               return MyErrorWidget(viewModel.sofUserMain.message ?? "NA");
             case Status.COMPLETED:
-              return _getSOFUserListView(viewModel.sofUserMain.data?.sofUsers);
+              return _getSOFUserListView(viewModel.users);
             default:
           }
           return Container();
@@ -61,24 +61,111 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: sofUserList?.length,
         itemBuilder: (context, position) {
           // return _getSOFUserListItem(sofUserList![position]);
-          return _getSOFUserListItem(sofUserList![position]);
+          if (position == sofUserList!.length - 1) {
+            viewModel.incrementPage();
+            viewModel.fetchSOFUsers();
+          }
+          return _getSOFUserListItem(sofUserList[position]);
         });
-
   }
-  Widget _getSOFUserListItem(SOFUser item) {
+
+  Widget _getSOFUserListItem2(SOFUser item) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(context.resources.dimension.smallMargin),
+        borderRadius:
+            BorderRadius.circular(context.resources.dimension.smallMargin),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(context.resources.dimension.bigMargin),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+      child: InkWell(
+        onTap: () {
+          _sendDataToSOFUserDetailScreen(context, item);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(context.resources.dimension.bigMargin),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Image.network(
+                    item.userAvatar ?? "",
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/img_error.png');
+                    },
+                    fit: BoxFit.fill,
+                    width: context.resources.dimension.listImageSize,
+                    height: context.resources.dimension.listImageSize,
+                  ),
+                  Container(width: context.resources.dimension.defaultMargin),
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Text(
+                              item.userName ?? "",
+                              style: TextStyle(
+                                  color: context.resources.color.colorGrey,
+                                  fontSize:
+                                      context.resources.dimension.mediumText),
+                            ),
+                            Text(
+                              '${item.userAge ?? "0"}',
+                              style: TextStyle(
+                                  color: context.resources.color.colorBlack,
+                                  fontSize:
+                                      context.resources.dimension.smallText),
+                            ),
+                            Text(
+                              item.location ?? "Unknown",
+                              maxLines: 2,
+                              style: TextStyle(
+                                  color: context.resources.color.colorGrey,
+                                  fontSize:
+                                      context.resources.dimension.mediumText),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          iconSize: 16,
+                          icon: const Icon(Icons.bookmark),
+                          color: (item.isBookmark
+                              ? context.resources.color.colorAccent
+                              : context.resources.color.colorGrey),
+                          onPressed: () {
+                            !item.isBookmark
+                                ? viewModel.insertBookmarkSOFUsers(item)
+                                : viewModel.deleteBookmarkSOFUsers(item);
+                            // ...
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getSOFUserListItem(SOFUser item) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
                 Image.network(
                   item.userAvatar ?? "",
                   errorBuilder: (context, error, stackTrace) {
@@ -88,57 +175,58 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: context.resources.dimension.listImageSize,
                   height: context.resources.dimension.listImageSize,
                 ),
-                Container(width: context.resources.dimension.defaultMargin),
+                SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(height: 5),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            item.userName ?? "",
-                            style: TextStyle(
-                                color: context.resources.color.colorGrey,
-                                fontSize: context.resources.dimension.mediumText),
-                          ),
-                          IconButton(
-                            iconSize: 16,
-                            icon: const Icon(Icons.bookmark),
-                            color: context.resources.color.colorAccent,
-                            onPressed: () {
-                              // ...
-                            },
-                          ),
-                        ],
-                      ),
-                      Container(height: 5),
+                    children: [
                       Text(
-                        '${item.userAge ?? "0"}',
+                        item.userName.toString(),
                         style: TextStyle(
-                            color: context.resources.color.colorBlack,
-                            fontSize: context.resources.dimension.smallText),
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
-                      Container(height: 10),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Text(
-                        item.location ?? "Unknown",
-                        maxLines: 2,
+                        item.userAge.toString() + " " + r"years",
                         style: TextStyle(
-                            color: context.resources.color.colorGrey,
-                            fontSize: context.resources.dimension.mediumText),
+                            fontSize: 16, fontWeight: FontWeight.w500),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          iconSize: 16,
+                          icon: const Icon(Icons.bookmark),
+                          color: (item.isBookmark
+                              ? context.resources.color.colorAccent
+                              : context.resources.color.colorGrey),
+                          onPressed: () {
+                            !item.isBookmark
+                                ? viewModel.insertBookmarkSOFUsers(item)
+                                : viewModel.deleteBookmarkSOFUsers(item);
+                            // ...
+                          },
+                        ),
+                      )
                     ],
                   ),
-                ),
+                )
               ],
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
 
-  // void _sendDataToMovieDetailScreen(BuildContext context, Movie item) {
-  //   Navigator.pushNamed(context, MovieDetailsScreen.id, arguments: item);
-  // }
+  void _sendDataToSOFUserDetailScreen(BuildContext context, SOFUser item) {
+    Navigator.pushNamed(context, SOFUserDetailsScreen.id, arguments: item);
+  }
 }
