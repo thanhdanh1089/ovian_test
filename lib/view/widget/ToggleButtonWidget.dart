@@ -72,7 +72,7 @@ class _MyToggleSwitchState extends State<MyToggleSwitch> {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: Color.lerp(Color.fromARGB(66, 209, 206, 206),
-                          Color.fromARGB(255, 232, 219, 115), global.position),
+                          Colors.amber, global.position),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(42.0)),
                     ),

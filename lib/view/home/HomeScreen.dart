@@ -38,11 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.resources.strings.homeScreen,
                 context.resources.color.colorWhite,
                 context.resources.dimension.bigText),
+            const Spacer(),
             MyToggleSwitch(
                 switched: (val) {
                   viewModel.loadFilterData();
                 },
-                initial: true)
+                initial: false)
           ],
         )),
         backgroundColor: context.resources.color.statusGrey,
@@ -56,7 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
             case Status.ERROR:
               return MyErrorWidget(viewModel.sofUserMain.message ?? "NA");
             case Status.COMPLETED:
-              return _getSOFUserListView(viewModel.users);
+              return _getSOFUserListView(
+                viewModel.users, 
+                viewModel.bookmarkUsers, 
+                viewModel.isBookmarkFilter);
             default:
           }
           return Container();
@@ -65,14 +69,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _getSOFUserListView(List<SOFUser>? sofUserList) {
+  Widget _getSOFUserListView(
+    List<SOFUser>? sofUserList, 
+    List<SOFUser>? sofUserListBookmark, 
+    bool isBookmarkFilter) {
     return ListView.builder(
         padding: EdgeInsets.only(
             right: context.resources.dimension.smallMargin,
             left: context.resources.dimension.smallMargin),
-        itemCount: sofUserList?.length,
+        itemCount: isBookmarkFilter ? sofUserListBookmark?.length : sofUserList?.length,
         itemBuilder: (context, position) {
-          if (position == sofUserList!.length - 1) {
+          List<SOFUser>? sofUserItems = isBookmarkFilter ? sofUserListBookmark : sofUserList;
+          if (position == sofUserItems!.length - 1 && isBookmarkFilter == false) {
             viewModel.incrementPage();
             viewModel.fetchSOFUsers();
             return Container(
@@ -84,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-          return _getSOFUserListItem(sofUserList[position]);
+          return _getSOFUserListItem(sofUserItems[position]);
         });
   }
 

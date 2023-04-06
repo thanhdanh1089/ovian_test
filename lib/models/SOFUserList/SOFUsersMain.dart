@@ -50,23 +50,23 @@ class SOFUser {
   bool? isBookmark;
 
   factory SOFUser.fromJson(Map<String, dynamic> json) => SOFUser(
-        userId: json["user_id"] == null ? null : json["user_id"],
-        userName: json["display_name"] == null ? null : json["display_name"],
+        userId: json["user_id"],
+        userName: json["display_name"],
         userAvatar:
-            json["profile_image"] == null ? null : json["profile_image"],
-        reputation: json["reputation"] == null ? null : json["reputation"],
-        location: json["location"] == null ? null : json["location"],
-        userAge: json["age"] == null ? 0 : json["age"],
+            json["profile_image"],
+        reputation: json["reputation"],
+        location: json["location"],
+        userAge: json["age"] ?? 0,
         isBookmark: false,
       );
 
   Map<String, dynamic> toJson() => {
-        "user_id": userId == null ? null : userId,
-        "display_name": userName == null ? null : userName,
-        "profile_image": userAvatar == null ? null : userAvatar,
-        "reputation": reputation == null ? null : reputation,
-        "location": location == null ? null : location,
-        "age": userAge == null ? 0 : userAge,
+        "user_id": userId ?? userId,
+        "display_name": userName,
+        "profile_image": userAvatar,
+        "reputation": reputation,
+        "location": location,
+        "age": userAge ?? 0,
       };
 }
 

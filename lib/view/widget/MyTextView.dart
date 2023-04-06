@@ -5,15 +5,13 @@ class MyTextView extends StatelessWidget {
   final label;
   final Color color;
   final double fontSize;
-  MyTextView(this.label,this.color,this.fontSize);
+  MyTextView(this.label, this.color, this.fontSize);
   @override
   Widget build(BuildContext context) {
     return Text(
-        label,
-        style: TextStyle(
-          color: color,
-          fontSize: fontSize
-        ),
-      );
+      label,
+      textAlign: TextAlign.center,
+      style: TextStyle(color: color, fontSize: fontSize),
+    );
   }
 }

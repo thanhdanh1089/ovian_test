@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ovian_test/data/remote/response/ApiResponse.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/repository/SOFUsers/SOFuserRepoImp.dart';
-import 'package:ovian_test/view/widget/ToggleButtonWidget.dart';
 
 class SOFUsersListVM extends ChangeNotifier {
   final _myRepo = SOFuserRepoImp();
@@ -25,15 +24,7 @@ class SOFUsersListVM extends ChangeNotifier {
 
   void loadFilterData() {
     isBookmarkFilter = !isBookmarkFilter;
-    if (isBookmarkFilter) {
-      users = bookmarkUsers;
-      notifyListeners();
-    } else {
-      resetPage();
-      fetchBookmarkSOFUsers().then((value) {
-        fetchSOFUsers();
-      });
-    }
+    notifyListeners();
   }
 
   void initSOFData() {
@@ -79,6 +70,7 @@ class SOFUsersListVM extends ChangeNotifier {
   }
 
   void _setBookmarkSOFUsersMain(List<SOFUser> response) {
+    bookmarkUsers = [];
     List<SOFUser>? items = response;
     items.forEach((element) {
       element.isBookmark = true;

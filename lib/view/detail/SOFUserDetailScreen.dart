@@ -39,11 +39,11 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-            child: MyTextView(
-                context.resources.strings.sofUserDetailScreen,
-                context.resources.color.colorWhite,
-                context.resources.dimension.bigText)),
+        title: MyTextView(
+            widget.sofUserData?.userName ??
+                context.resources.strings.homeScreen,
+            context.resources.color.colorWhite,
+            context.resources.dimension.bigText),
         backgroundColor: context.resources.color.statusGrey,
       ),
       body: ChangeNotifierProvider<SOFUserDetailVM>.value(
@@ -78,7 +78,8 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
               margin: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
+                valueColor:
+                    AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
               ),
             );
           }
@@ -106,42 +107,71 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Post id:" +item.postId.toString(),
-                          style: TextStyle(
-                              fontSize:
-                                  context.resources.dimension.textFontSize,
-                              fontWeight: FontWeight.w500),
+                        Row(
+                          children: [
+                            Icon(Icons.history,
+                                color: Colors.amber,
+                                size:
+                                    context.resources.dimension.smallIconImage),
+                            SizedBox(
+                                width:
+                                    context.resources.dimension.largeSizebox),
+                            Text(
+                              item.postId.toString(),
+                              style: TextStyle(
+                                  fontSize:
+                                      context.resources.dimension.textFontSize,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            
+                          ],
                         ),
                         SizedBox(
                           height: context.resources.dimension.smallSizebox,
                         ),
-                        Text(
-                          "Reputation type:" + item.reputationType.toString(),
-                          style: TextStyle(
-                              fontSize:
-                                  context.resources.dimension.textFontSize,
-                              fontWeight: FontWeight.w500),
+                        Row(
+                          children: [
+                            Icon(
+                                item.reputationType == "post_upvoted"
+                                    ? Icons.thumb_up
+                                    : Icons.check,
+                                color: item.reputationType == "post_upvoted"
+                                    ? Colors.amber
+                                    : Colors.green,
+                                size:
+                                    context.resources.dimension.smallIconImage),
+                            SizedBox(
+                                width:
+                                    context.resources.dimension.largeSizebox),
+                            Text(
+                              item.reputationChange.toString(),
+                              style: TextStyle(
+                                  fontSize:
+                                      context.resources.dimension.textFontSize,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                                width:
+                                    context.resources.dimension.smallSizebox),
+                            Text(
+                              item.reputationType.toString(),
+                              style: TextStyle(
+                                  fontSize:
+                                      context.resources.dimension.smallText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const Spacer(),
+                            Text(
+                              Utils.formatDateTime(item.creationDate ?? 0),
+                              style: TextStyle(
+                                  fontSize:
+                                      context.resources.dimension.smallText,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: context.resources.dimension.smallSizebox,
-                        ),
-                        Text(
-                          "Reputation change:" +item.reputationChange.toString(),
-                          style: TextStyle(
-                              fontSize:
-                                  context.resources.dimension.textFontSize,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: context.resources.dimension.smallSizebox,
-                        ),
-                        Text(
-                          "Create date:" + item.creationDate.toString(),
-                          style: TextStyle(
-                              fontSize:
-                                  context.resources.dimension.textFontSize,
-                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

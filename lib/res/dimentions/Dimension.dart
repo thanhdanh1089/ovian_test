@@ -21,6 +21,8 @@ abstract class Dimensions{
   double get listImageSize;
   double get imageHeight;
   double get smallSizebox;
+  double get mediumSizebox;
+  double get largeSizebox;
   //font size
   double get textFontSize;
 

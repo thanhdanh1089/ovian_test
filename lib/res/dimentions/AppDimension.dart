@@ -50,12 +50,20 @@ class AppDimension extends Dimensions {
   double get imageHeight => 450;
 
   @override
-  double get smallSizebox => 5;
+  double get smallSizebox => 4;
+
+  @override
+  double get mediumSizebox => 8;
+
+  @override
+  double get largeSizebox => 12;
 
   @override
   double get textFontSize => 16;
 
   @override
   double get iconImage => 40;
+
+  @override
   double get smallIconImage => 24;
 }

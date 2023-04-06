@@ -22,7 +22,7 @@ class DatabaseHandler {
 
   Future<List<SOFUser>> getAllUsers() async {
     final Database db = await initializedDB();
-    List<Map<String, dynamic>> result = await db.query('BookmarkUsers');
+    List<Map<String, dynamic>> result = await db.query('BookmarkUsers', orderBy: 'reputation DESC');
     return result.map((e) => SOFUser.fromJson(e)).toList();
   }
 
