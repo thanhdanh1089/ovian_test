@@ -19,6 +19,7 @@ class SOFUsersListVM extends ChangeNotifier {
     bookmarkUsers = [];
     page = 1;
     nextPage = 2;
+    isBookmarkFilter = false;
   }
 
   void loadFilterData() {
@@ -37,9 +38,7 @@ class SOFUsersListVM extends ChangeNotifier {
     fetchBookmarkSOFUsers().then((value) {
       fetchSOFUsers();
     });
-    
   }
-  
 
   void incrementPage() {
     if (sofUserMain.data?.hasMore == false) return;
@@ -78,8 +77,9 @@ class SOFUsersListVM extends ChangeNotifier {
 
   void _setBookmarkSOFUsersMain(List<SOFUser> response) {
     List<SOFUser>? items = response;
-    items.forEach((element) { 
-      element.isBookmark = true;});
+    items.forEach((element) {
+      element.isBookmark = true;
+    });
     bookmarkUsers!.addAll(items);
   }
 
@@ -95,6 +95,13 @@ class SOFUsersListVM extends ChangeNotifier {
   }
 
   SOFUser _setBookmarkSOFUsers(SOFUser sofUser) {
+    SOFUser item = sofUser;
+    item.isBookmark = true;
+    return item;
+  }
+
+  @visibleForTesting
+  SOFUser setBookmarkSOFUsers(SOFUser sofUser) {
     SOFUser item = sofUser;
     item.isBookmark = true;
     return item;

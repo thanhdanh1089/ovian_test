@@ -41,7 +41,6 @@ class SOFUserDetailVM extends ChangeNotifier {
 
   Future<void> fetchSOFUserDetail() async {
     if (userId == null) return;
-    // _setSOFUsersDetailMain(ApiResponse.loading());
     _myRepo
         .getSOFUsersDetail(userId!, page, pageSize)
         .then((value) => _setSOFUsersDetailMain(ApiResponse.completed(value)))
