@@ -12,9 +12,12 @@ import 'package:ovian_test/view/widget/MyErrorWidget.dart';
 import 'package:ovian_test/view/widget/LoadingWidget.dart';
 
 class HomeScreen extends StatefulWidget {
-  static final String id = "home_screen";
+  static const String id = "home_screen";
+
+  const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -53,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Consumer<SOFUsersListVM>(builder: (context, viewModel, _) {
           switch (viewModel.sofUserMain.status) {
             case Status.LOADING:
-              return LoadingWidget();
+              return const LoadingWidget();
             case Status.ERROR:
               return MyErrorWidget(viewModel.sofUserMain.message ?? "NA");
             case Status.COMPLETED:
@@ -86,9 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
             return Container(
               margin: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
-              child: const CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 valueColor:
-                    AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
+                    AlwaysStoppedAnimation(context.resources.color.statusGrey),
               ),
             );
           }
@@ -144,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: context.resources.dimension.smallSizebox,
                         ),
                         Text(
-                          item.userAge.toString() + " " + r"year",
+                         '${item.userAge.toString()} years old',
                           style: TextStyle(
                               fontSize:
                                   context.resources.dimension.textFontSize,

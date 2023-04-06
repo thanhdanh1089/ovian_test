@@ -11,6 +11,7 @@ class SOFUsersListVM extends ChangeNotifier {
   int pageSize = 30;
   int nextPage = 2;
   bool isBookmarkFilter = false;
+  String errorMessage = "";
 
   ApiResponse<SOFUsersMain> sofUserMain = ApiResponse.loading();
 
@@ -108,7 +109,7 @@ class SOFUsersListVM extends ChangeNotifier {
         .getSOFUsersList(page, pageSize)
         .then((value) => _setSOFUsersMain(ApiResponse.completed(value)))
         .onError((error, stackTrace) =>
-            _setSOFUsersMain(ApiResponse.error(error.toString())));
+            ApiResponse.error(error.toString()));
   }
 
   Future<void> fetchBookmarkSOFUsers() async {

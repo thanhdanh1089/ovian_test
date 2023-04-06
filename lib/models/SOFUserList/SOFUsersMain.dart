@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 SOFUsersMain sofUsersMainFromJson(String str) =>
     SOFUsersMain.fromJson(json.decode(str));
@@ -19,14 +18,14 @@ class SOFUsersMain {
         sofUsers: json["items"] == null
             ? null
             : List<SOFUser>.from(json["items"].map((x) => SOFUser.fromJson(x))),
-        hasMore: json["has_more"] == null ? null : json["has_more"],
+        hasMore: json["has_more"],
       );
 
   Map<String, dynamic> toJson() => {
         "items": sofUsers == null
             ? null
             : List<dynamic>.from(sofUsers!.map((x) => x.toJson())),
-        "has_more": hasMore == null ? null : hasMore,
+        "has_more": hasMore,
       };
 }
 
@@ -68,18 +67,4 @@ class SOFUser {
         "location": location,
         "age": userAge ?? 0,
       };
-}
-
-class EnumValues<T> {
-  late Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
+// ignore: must_be_immutable
 class MyToggleSwitch extends StatefulWidget {
   Function(bool) switched;
   final bool initial;

@@ -6,7 +6,7 @@ import 'package:ovian_test/res/strings/Strings.dart';
 import 'package:ovian_test/res/strings/EnglishStrings.dart';
 
 class Resources {
-  BuildContext _context;
+  final BuildContext _context;
 
   Resources(this._context);
 

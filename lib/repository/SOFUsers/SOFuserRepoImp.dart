@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'package:ovian_test/data/remote/network/BaseApiService.dart';
 import 'package:ovian_test/data/remote/network/NetworkApiService.dart';
 import 'package:ovian_test/data/remote/network/ApiEndPoints.dart';
@@ -9,7 +7,7 @@ import 'package:ovian_test/repository/SOFUsers/SOFUserRepo.dart';
 import 'package:ovian_test/data/remote/persistentStoregrade/CoreDatabaseStoregrade.dart';
 
 class SOFuserRepoImp implements SOFUsersRepo {
-  BaseApiService _apiService = NetworkApiService();
+  final BaseApiService _apiService = NetworkApiService();
   DatabaseHandler dbHandler = DatabaseHandler();
 
   @override
@@ -20,7 +18,7 @@ class SOFuserRepoImp implements SOFUsersRepo {
       final jsonData = SOFUsersMain.fromJson(response);
       return jsonData;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

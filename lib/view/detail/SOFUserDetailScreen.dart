@@ -1,27 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
-import 'package:ovian_test/res/Resources.dart';
 import 'package:ovian_test/utils/Utils.dart';
-import 'package:ovian_test/view/widget/MyChips.dart';
 import 'package:ovian_test/view/widget/MyTextView.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
 import 'package:ovian_test/view_model/detail/SOFUserDetailVM.dart';
 import 'package:ovian_test/data/remote/response/Status.dart';
-import 'package:ovian_test/res/AppContextExtension.dart';
-import 'package:ovian_test/utils/Utils.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ovian_test/view/widget/MyErrorWidget.dart';
 import 'package:ovian_test/view/widget/LoadingWidget.dart';
 
 class SOFUserDetailsScreen extends StatefulWidget {
-  static final String id = "sofuser_details";
+  static const String id = "sofuser_details";
   final SOFUser? sofUserData;
-  const SOFUserDetailsScreen(this.sofUserData);
+  const SOFUserDetailsScreen(this.sofUserData, {super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SOFUserDetailsState createState() => _SOFUserDetailsState();
 }
 
@@ -51,7 +47,7 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
         child: Consumer<SOFUserDetailVM>(builder: (context, viewModel, _) {
           switch (viewModel.sofUserDetailMain.status) {
             case Status.LOADING:
-              return LoadingWidget();
+              return const LoadingWidget();
             case Status.ERROR:
               return MyErrorWidget(viewModel.sofUserDetailMain.message ?? "NA");
             case Status.COMPLETED:
@@ -184,18 +180,4 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
       ),
     );
   }
-
-  // Widget _setChipView(List<String>? data, Color color) {
-  //   var size = data?.length ?? 0;
-  //   return Container(
-  //     alignment: AlignmentDirectional.topStart,
-  //     child: Wrap(
-  //       alignment: WrapAlignment.start,
-  //       spacing: 8,
-  //       children: [
-  //         for (var i = 0; i < size; i++) MyChips(data?[i] ?? "NA", color)
-  //       ],
-  //     ),
-  //   );
-  // }
 }

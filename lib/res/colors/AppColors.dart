@@ -1,21 +1,19 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:ovian_test/res/colors/BaseColors.dart';
 
 class AppColors implements BaseColors{
-  Map<int, Color> _primary =
+  final Map<int, Color> _primary =
   {
-    50:Color.fromRGBO(22, 134, 206, 0.1),
-    100:Color.fromRGBO(22, 134, 206, 0.2),
-    200:Color.fromRGBO(22, 134, 206, 0.3),
-    300:Color.fromRGBO(22, 134, 206, 0.4),
-    400:Color.fromRGBO(22, 134, 206, 0.5),
-    500:Color.fromRGBO(22, 134, 206, 0.6),
-    600:Color.fromRGBO(22, 134, 206, 0.7),
-    700:Color.fromRGBO(22, 134, 206, 0.8),
-    800:Color.fromRGBO(22, 134, 206, 0.9),
-    900:Color.fromRGBO(22, 134, 206, 1.0),
+    50:const Color.fromRGBO(22, 134, 206, 0.1),
+    100:const Color.fromRGBO(22, 134, 206, 0.2),
+    200:const Color.fromRGBO(22, 134, 206, 0.3),
+    300:const Color.fromRGBO(22, 134, 206, 0.4),
+    400:const Color.fromRGBO(22, 134, 206, 0.5),
+    500:const Color.fromRGBO(22, 134, 206, 0.6),
+    600:const Color.fromRGBO(22, 134, 206, 0.7),
+    700:const Color.fromRGBO(22, 134, 206, 0.8),
+    800:const Color.fromRGBO(22, 134, 206, 0.9),
+    900:const Color.fromRGBO(22, 134, 206, 1.0),
   };
 
   @override
@@ -25,16 +23,16 @@ class AppColors implements BaseColors{
   MaterialColor get colorPrimary => MaterialColor(0xff1686ce,_primary);
 
   @override
-  Color get colorPrimaryText => Color(0xff49ABFF);
+  Color get colorPrimaryText => const Color(0xff49ABFF);
 
   @override
-  Color get colorSecondaryText => Color(0xff3593FF);
+  Color get colorSecondaryText => const Color(0xff3593FF);
 
   @override
-  Color get colorWhite => Color(0xffffffff);
+  Color get colorWhite => const Color(0xffffffff);
 
   @override
-  Color get colorBlack => Color(0xff000000);
+  Color get colorBlack => const Color(0xff000000);
 
   @override
   Color get castChipColor => Colors.deepOrangeAccent;
@@ -43,8 +41,8 @@ class AppColors implements BaseColors{
   Color get catChipColor => Colors.indigoAccent;
 
   @override
-  Color get colorGrey => Color.fromARGB(255, 100, 104, 112);
+  Color get colorGrey => const Color.fromARGB(255, 100, 104, 112);
 
   @override
-  Color get statusGrey => Color.fromARGB(255, 26, 27, 29);
+  Color get statusGrey => const Color.fromARGB(255, 26, 27, 29);
 }
