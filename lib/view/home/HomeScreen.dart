@@ -3,12 +3,11 @@ import 'package:ovian_test/data/remote/response/Status.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
 import 'package:ovian_test/view/detail/SOFUserDetailScreen.dart';
-import 'package:ovian_test/view/widget/MyTextView.dart';
+import 'package:ovian_test/view/widget/AppTextView.dart';
 import 'package:ovian_test/view/widget/ToggleButtonWidget.dart';
-import 'package:ovian_test/view_model/home/SOFUsersListVM.dart';
+import 'package:ovian_test/viewModel/home/SOFUsersListVM.dart';
 import 'package:provider/provider.dart';
-
-import 'package:ovian_test/view/widget/MyErrorWidget.dart';
+import 'package:ovian_test/view/widget/AppErrorWidget.dart';
 import 'package:ovian_test/view/widget/LoadingWidget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Center(
             child: Row(
           children: <Widget>[
-            MyTextView(
+            AppTextView(
                 context.resources.strings.homeScreen,
                 context.resources.color.colorWhite,
                 context.resources.dimension.bigText),
@@ -58,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case Status.LOADING:
               return const LoadingWidget();
             case Status.ERROR:
-              return MyErrorWidget(viewModel.sofUserMain.message ?? "NA");
+              return AppErrorWidget(viewModel.sofUserMain.message ?? "NA");
             case Status.COMPLETED:
               return _getSOFUserListView(
                 viewModel.users, 

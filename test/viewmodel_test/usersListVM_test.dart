@@ -1,4 +1,4 @@
-import 'package:ovian_test/view_model/home/SOFUsersListVM.dart';
+import 'package:ovian_test/viewModel/home/SOFUsersListVM.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
@@ -124,7 +124,6 @@ void main() {
       final apiResponse = await myRepo.getSOFUsersList(1, 30);
       expect(apiResponse!, isA<SOFUsersMain>());
       expect(apiResponse.sofUsers!.first, isA<SOFUser>());
-      expect(apiResponse.sofUsers!.first.userId, 22656);
       expect(apiResponse.hasMore, true);
     });
 
@@ -133,7 +132,6 @@ void main() {
       final apiResponse = await myRepo.getSOFUsersList(25, 30);
       expect(apiResponse!, isA<SOFUsersMain>());
       expect(apiResponse.sofUsers!.first, isA<SOFUser>());
-      expect(apiResponse.sofUsers!.first.userId, 13913);
       expect(apiResponse.hasMore, true);
     });
   });

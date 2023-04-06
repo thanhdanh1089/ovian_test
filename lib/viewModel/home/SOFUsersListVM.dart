@@ -73,9 +73,9 @@ class SOFUsersListVM extends ChangeNotifier {
   void _setBookmarkSOFUsersMain(List<SOFUser> response) {
     bookmarkUsers = [];
     List<SOFUser>? items = response;
-    items.forEach((element) {
+    for (var element in items) {
       element.isBookmark = true;
-    });
+    }
     bookmarkUsers!.addAll(items);
   }
 

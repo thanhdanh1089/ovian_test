@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
 import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/utils/Utils.dart';
-import 'package:ovian_test/view/widget/MyTextView.dart';
+import 'package:ovian_test/view/widget/AppTextView.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
-import 'package:ovian_test/view_model/detail/SOFUserDetailVM.dart';
+import 'package:ovian_test/viewModel/detail/SOFUserDetailVM.dart';
 import 'package:ovian_test/data/remote/response/Status.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ovian_test/view/widget/MyErrorWidget.dart';
+import 'package:ovian_test/view/widget/AppErrorWidget.dart';
 import 'package:ovian_test/view/widget/LoadingWidget.dart';
 
 class SOFUserDetailsScreen extends StatefulWidget {
@@ -32,10 +32,11 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: MyTextView(
+        title: AppTextView(
             widget.sofUserData?.userName ??
                 context.resources.strings.homeScreen,
             context.resources.color.colorWhite,
@@ -49,7 +50,7 @@ class _SOFUserDetailsState extends State<SOFUserDetailsScreen> {
             case Status.LOADING:
               return const LoadingWidget();
             case Status.ERROR:
-              return MyErrorWidget(viewModel.sofUserDetailMain.message ?? "NA");
+              return AppErrorWidget(viewModel.sofUserDetailMain.message ?? "NA");
             case Status.COMPLETED:
               return _getSOFUserDetailView(viewModel.posts);
             default:
