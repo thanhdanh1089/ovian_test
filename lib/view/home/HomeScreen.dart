@@ -4,6 +4,7 @@ import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
 import 'package:ovian_test/view/detail/SOFUserDetailScreen.dart';
 import 'package:ovian_test/view/widget/MyTextView.dart';
+import 'package:ovian_test/view/widget/ToggleButtonWidget.dart';
 import 'package:ovian_test/view_model/home/SOFUsersListVM.dart';
 import 'package:provider/provider.dart';
 
@@ -31,10 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-            child: MyTextView(
+            child: Row(
+          children: <Widget>[
+            MyTextView(
                 context.resources.strings.homeScreen,
                 context.resources.color.colorWhite,
-                context.resources.dimension.bigText)),
+                context.resources.dimension.bigText),
+            MyToggleSwitch(
+                switched: (val) {
+                  viewModel.loadFilterData();
+                },
+                initial: true)
+          ],
+        )),
         backgroundColor: context.resources.color.statusGrey,
       ),
       body: ChangeNotifierProvider<SOFUsersListVM>.value(
@@ -69,10 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: const EdgeInsets.all(20.0),
               alignment: Alignment.center,
               child: const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
+                valueColor:
+                    AlwaysStoppedAnimation(Color.fromARGB(255, 38, 42, 49)),
               ),
             );
-            
           }
           return _getSOFUserListItem(sofUserList[position]);
         });
@@ -120,13 +130,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                               fontSize:
                                   context.resources.dimension.textFontSize,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: context.resources.dimension.smallSizebox,
+                        ),
+                        Text(
+                          item.userAge.toString() + " " + r"year",
+                          style: TextStyle(
+                              fontSize:
+                                  context.resources.dimension.textFontSize,
                               fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
                           height: context.resources.dimension.smallSizebox,
                         ),
                         Text(
-                          item.userAge.toString() + " " + r"years",
+                          item.reputation.toString(),
                           style: TextStyle(
                               fontSize:
                                   context.resources.dimension.textFontSize,
