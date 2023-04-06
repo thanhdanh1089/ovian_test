@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ovian_test/data/remote/response/ApiResponse.dart';
-import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
-import 'package:ovian_test/repository/SOFUsers/SOFuserRepoImp.dart';
+import 'package:ovian_test/domain/entities/SOFUsersDetailMain.dart';
+import 'package:ovian_test/domain/repository/SOFUsers/SOFuserRepoImp.dart';
 
 class SOFUserDetailVM extends ChangeNotifier {
   final _myRepo = SOFuserRepoImp();

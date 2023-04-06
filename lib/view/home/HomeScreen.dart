@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ovian_test/data/remote/response/Status.dart';
-import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
+import 'package:ovian_test/domain/entities/SOFUsersMain.dart';
 import 'package:ovian_test/res/AppContextExtension.dart';
 import 'package:ovian_test/view/detail/SOFUserDetailScreen.dart';
 import 'package:ovian_test/view/widget/AppTextView.dart';

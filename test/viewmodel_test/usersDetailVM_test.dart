@@ -2,8 +2,8 @@ import 'package:ovian_test/viewModel/detail/SOFUserDetailVM.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
-import 'package:ovian_test/repository/SOFUsers/SOFuserRepoImp.dart';
-import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
+import 'package:ovian_test/domain/repository/SOFUsers/SOFuserRepoImp.dart';
+import 'package:ovian_test/domain/entities/SOFUsersDetailMain.dart';
 
 @GenerateMocks([http.Client])
 void main() {

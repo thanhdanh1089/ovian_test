@@ -1,4 +1,4 @@
-import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
+import 'package:ovian_test/domain/entities/SOFUsersMain.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,7 +9,7 @@ class DatabaseHandler {
       join(path, "BookmarkUsers.db"),
       onCreate: (database, version) async {
         await database.execute(
-            "CREATE TABLE BookmarkUsers (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL, display_name TEXT NOT NULL, profile_image TEXT NOT NULL, reputation INTEGER NOT NULL, location INTEGER NOT NULL, age INTEGER DEFAULT 0)");
+            "CREATE TABLE BookmarkUsers (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, display_name TEXT, profile_image TEXT, reputation INTEGER, location INTEGER, age INTEGER DEFAULT 0)");
       },
       version: 1,
     );

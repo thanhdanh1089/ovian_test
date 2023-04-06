@@ -49,22 +49,22 @@ class SOFUser {
   bool? isBookmark;
 
   factory SOFUser.fromJson(Map<String, dynamic> json) => SOFUser(
-        userId: json["user_id"],
-        userName: json["display_name"],
+        userId: json["user_id"] ?? 0,
+        userName: json["display_name"] ?? "",
         userAvatar:
-            json["profile_image"],
-        reputation: json["reputation"],
-        location: json["location"],
+            json["profile_image"] ?? "",
+        reputation: json["reputation"] ?? "",
+        location: json["location"] ?? "",
         userAge: json["age"] ?? 0,
         isBookmark: false,
       );
 
   Map<String, dynamic> toJson() => {
         "user_id": userId ?? userId,
-        "display_name": userName,
-        "profile_image": userAvatar,
-        "reputation": reputation,
-        "location": location,
+        "display_name": userName ?? "",
+        "profile_image": userAvatar ?? "",
+        "reputation": reputation ?? "",
+        "location": location ?? "",
         "age": userAge ?? 0,
       };
 }

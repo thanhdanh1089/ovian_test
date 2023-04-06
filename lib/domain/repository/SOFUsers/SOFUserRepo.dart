@@ -1,5 +1,5 @@
-import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
-import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
+import 'package:ovian_test/domain/entities/SOFUsersMain.dart';
+import 'package:ovian_test/domain/entities/SOFUsersDetailMain.dart';
 
 class SOFUsersRepo {
   Future<SOFUsersMain?> getSOFUsersList(int page, int pageSize) async {

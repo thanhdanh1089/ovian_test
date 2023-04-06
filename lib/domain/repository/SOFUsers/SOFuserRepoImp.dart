@@ -1,9 +1,9 @@
 import 'package:ovian_test/data/remote/network/BaseApiService.dart';
 import 'package:ovian_test/data/remote/network/NetworkApiService.dart';
 import 'package:ovian_test/data/remote/network/ApiEndPoints.dart';
-import 'package:ovian_test/models/SOFUserList/SOFUsersMain.dart';
-import 'package:ovian_test/models/SOFUserDetail/SOFUsersDetailMain.dart';
-import 'package:ovian_test/repository/SOFUsers/SOFUserRepo.dart';
+import 'package:ovian_test/domain/entities/SOFUsersMain.dart';
+import 'package:ovian_test/domain/entities/SOFUsersDetailMain.dart';
+import 'package:ovian_test/domain/repository/SOFUsers/SOFUserRepo.dart';
 import 'package:ovian_test/data/remote/persistentStoregrade/CoreDatabaseStoregrade.dart';
 
 class SOFuserRepoImp implements SOFUsersRepo {
